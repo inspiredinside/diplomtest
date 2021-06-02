@@ -1,0 +1,5 @@
+venv
+trace.log
+tet.py
+AAPL.csv
+*.png
