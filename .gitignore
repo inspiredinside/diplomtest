@@ -1,5 +1,5 @@
 venv
 trace.log
 tet.py
-AAPL.csv
+*.csv
 *.png
