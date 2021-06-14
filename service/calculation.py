@@ -102,8 +102,10 @@ def calculate(
     # original.index = range(len(original.index))
     print(original[['Date', 'Open']])
     print(df_forecast[['Date', 'Open']])
+    plt.figure(figsize=(10, 8))
     plt.plot(original['Date'], original['Open'], 'b')
     plt.plot(df_forecast['Date'], df_forecast['Open'], 'g')
+    plt.xticks(rotation=30)
     generated_file_name = generate_filename('png')
     plt.savefig('./figures/' + generated_file_name)
     return generated_file_name

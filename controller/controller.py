@@ -1,24 +1,22 @@
 import logging
 import sys
-import time
-from flask import Flask, Response, request, abort, send_file, session, jsonify, make_response
-from PIL import Image
+from flask import Flask, request, send_file, jsonify, make_response
 from flask_cors import CORS, cross_origin
 
-from helper.helpers import validate, get_forecast, convert_dates_to_epoch_format
+from helper.helpers import get_forecast, convert_dates_to_epoch_format
 from service import calculation
 
 
 def create_logger(level=logging.INFO):
-    log = logging.getLogger("kafka_exporter")
-    log.setLevel(level)
+    logger = logging.getLogger("kafka_exporter")
+    logger.setLevel(level)
     # handler = logging.StreamHandler(sys.stdout)
     fh = logging.FileHandler("trace.log")
     fh.setLevel(level)
     formatter = logging.Formatter('%(asctime)s - PID:%(process)d - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
-    log.addHandler(fh)
-    return log
+    logger.addHandler(fh)
+    return logger
 
 
 log = create_logger(level=logging.INFO)
@@ -36,7 +34,7 @@ def calculate_forecast():
         print(type(end_date))
         ticker = content['ticker']
         interval = content['interval']
-        epochs = content['epochs']
+        epochs = content['epoch']
         batch_size = content['batchSize']
         epoch_start_date, epoch_end_date = convert_dates_to_epoch_format(start_date, end_date)
         data_file = get_forecast(period1=epoch_start_date,period2=epoch_end_date, ticker=ticker, interval=interval)
